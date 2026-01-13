@@ -37,7 +37,7 @@ public class CheckOutApp{
 
         String buyMore ="";
         System.out.println("What is the customer's Name: ");
-        customersName = input.nextLine();
+        customersName = input.nextLine().toUpperCase();
         System.out.println("-------------------------------");
         System.out.println("-------------------------------\n");
 

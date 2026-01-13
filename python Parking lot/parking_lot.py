@@ -1,49 +1,29 @@
 
 
 
-def all_lists():
-    availability = "available"
-    car_name = None
-    lists = [[availability, car_name]for _ in range(20)]
-    return lists
-    
+def is_occupied(parking_space: list[int], index: int)-> bool:
+    if parking_space[index] == 1:
+        return True
+    return False
+ 
+def book_slot(parking_space: list[int], index: int)-> str:
+    if not is_occupied(parking_space, index):
+        parking_space[index] = 1
+        return f" slot{index + 1} Booked successfully".upper()
+    return "already Occupied".upper() 
+
+def unoccupy_slot(parking_space: list[int],index: int)-> str:
+    if is_occupied(parking_space, index):
+        parking_space[index] = 0
+        return f"SLOT{index + 1} UNOCCUPIED SUCCESSFULLy" 
+    return f"SLOT{index +1} NEVER OCCUPIED"
+
+def occupied_space(parking_space: list[int]) -> list[int]:
+   return [index for index, park_space in enumerate(parking_space, 1) if park_space == 1]
+
+def unoccupied_space(parking_space: list[int]) -> list[int]:
+   return [index for index, park_space in enumerate(parking_space, 1) if park_space == 0]
 
 
-def get_parking_space(index, car_name):
-    if all_lists()[index-1][0] == "available":
-        all_lists()[index-1][0] = "unavailable"
-        all_lists()[index-1][1] = car_name
-        print("slot books successfully")
-
-def leave_parking_space(index,car_name ):
-    if all_lists()[index-1][0] == "unavailable" and all_lists()[index-1][1] == car_name :
-        all_lists()[index-1][0] = "available"
-        all_lists()[index-1][1] = None
-        return all_list()
-    print("car not in car pack")
-
-def get_all_available_space(lists):
-    new_list = []
-    for slot in lists:
-        if slot[0] == "available":
-            new_list.append(slot)
-    return new_list
 
 
-def get_all_aunvailable_space(lists):
-    new_list = []
-    for slot in lists:
-        if slot[0] == "unavailable":
-            new_list.append(slot)
-    return new_list
-
-
-lists = []
-parking_lot = all_lists()
-
-for index, lots in enumerate(parking_lot, 1):
-    print(f"{index}. {lots[0]}\t{lots[1]}")
-
-lot = get_parking_space(1, "camry")
-for index, lots in enumerate(parking_lot, 1):
-    print(f"{index}. {lots[0]}\t{lots[1]}")

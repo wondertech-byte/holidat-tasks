@@ -23,6 +23,7 @@ class CipherMachine{
     }
 
 
+
      public char[] decipher(char[] letters, int key){
        int index = 0;
        char[] cipher = new char[letters.length];
