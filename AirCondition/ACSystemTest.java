@@ -5,10 +5,7 @@ class ACSystemTest{
 
      ACService service =  new ACService();
 
-    @Test
-    void testAirConditonalExist(){
-        assertNotNull(service);
-    }
+    
 
     @Test
     void testAirConditionalIsOne(){
@@ -17,34 +14,48 @@ class ACSystemTest{
 
     @Test
     void testAricondtionalisOff(){
-        assertFalse(service.powerOf());
+        assertFalse(service.powerOff());
     }
 
 
     @Test
-    void testAirconditonalIncreaseTemperature(){
-        assertEquals(service.increaseTemperature(2.0),18);
-    }
-
-    @Test
-    void testAirconditonalDecreaseTemperatureBeforeIncreament(){
-        assertEquals(service.decreaseTemperature(20),16);
-    }
-   
-    @Test
-    void testAirconditonalDecreaseTemperatureAfterIncreament(){
-        service.increaseTemperature(20);
-        assertEquals(service.decreaseTemperature(10),20);
+    void testAirconditonalIncreaseTemperatureWhenPoweredOff(){
+        service.powerOff();
+         for(int repeat = 0; repeat < 5 ; repeat++){
+            service.increaseTemperature();
+        }
+        assertEquals(service.increaseTemperature(),16);
     }
 
     @Test
     void testAirconditonalDecreaseTemperatureLimit(){
-        service.increaseTemperature(20);
-        assertEquals(service.decreaseTemperature(30),16);
+        service.powerOn();
+        for(int repeat = 0; repeat < 10 ; repeat++){
+            service.decreaseTemperature();
+        }
+        assertEquals(service.decreaseTemperature(),16);
     }
+    
+     @Test
+    void testAirconditonalIncreaseTemperatureLimit(){
+        service.powerOn();
+        for(int repeat = 0; repeat < 20; repeat++){
+            service.increaseTemperature();
+        }
+        assertEquals(service.increaseTemperature(),30);
+    }
+    
 
     @Test
-    void testAirconditonalIncreaseTemperatureLimit(){
-        assertEquals(service.increaseTemperature(40),30);
+    void testAirconditonalDecreaseTemperatureAfterIncreament(){
+        service.powerOn();
+        for(int repeat = 0; repeat < 5 ; repeat++){
+            service.increaseTemperature();
+        }
+        assertEquals(service.decreaseTemperature(),20);
     }
+
+
+    
+    
 }

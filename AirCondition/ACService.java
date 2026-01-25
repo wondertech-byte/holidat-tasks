@@ -2,18 +2,20 @@ class ACService{
     
     ACSystem airConditional = new ACSystem();
 
-    public boolean powerOn(){
-        airConditional.setPower(true);
-        System.out.println("AC powered on");
-        return airConditional.getPower();
-    }
+    public void setPower(boolean power){
+        airConditional.setPower(power);
+    }   
 
-    public boolean powerOf(){
-        airConditional.setPower(false);
-        System.out.println("AC powered off");
-        return airConditional.getPower();
+    public boolean powerOn(){
+        airConditional.setPower(true);  
+        return airConditional.getPower();  
     }
     
+    public boolean powerOff(){
+        airConditional.setPower(false);
+        return airConditional.getPower();  
+    }
+
     public boolean isIncreaseLimit(){
         if(airConditional.getTemperature() == 30){
             return true;
@@ -26,28 +28,32 @@ class ACService{
          }return false;
     }    
 
-    public double increaseTemperature(double temperature){
-        if(isIncreaseLimit())System.out.println("AC at highest Temperature");
-        else{
-            if(temperature > 0){
-                airConditional.setTemperature(temperature);
-            }else if(temperature < 0){
-                airConditional.setTemperature(0);
-            }
-        } return airConditional.getTemperature();
+    public double increaseTemperature(){
+       if(airConditional.getPower()){
+             if(isIncreaseLimit()) {
+                System.out.println("AC at highest Temperature");
+                showAcTemperature();
+             }
+             else{ 
+                airConditional.setTemperature(1); 
+                showAcTemperature();
+          }
+        }else{System.out.println("Power on to perform action");}
+         return airConditional.getTemperature();
     }
 
 
-     public double decreaseTemperature(double temperature){
-        if(isDecreaseLimit())System.out.println("AC at lowest Temperature");
-        else{
-            if(temperature > 0){
-                airConditional.setTemperature(-temperature);
+     public double decreaseTemperature(){
+       if(airConditional.getPower()){
+             if(isDecreaseLimit()){
+                System.out.println("AC at lowest Temperature");
+                showAcTemperature();
+             }
+            else{ airConditional.setTemperature(-1);  
+                  showAcTemperature();
             }
-            else{
-                return airConditional.getTemperature();
-            }
-        }return airConditional.getTemperature();
+        }else{System.out.println("power on perform action");}
+        return airConditional.getTemperature();
     }
 
     public void showAcTemperature(){

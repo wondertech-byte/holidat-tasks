@@ -14,40 +14,36 @@ public class Main{
         1. power on/of
         2. Accelerate
         3. Decelerate
-        4. set Accelerator
         0. Exit
          """;    
 
         System.out.print(menu+ "\nEnter option: ");
-         try{option = input.nextInt();}
-          catch(InputMismatchException e){
-            System.out.print("invalid input, try again: ");
-            input.nextLine();
-            option = input.nextInt();
+         boolean isCorrect = true;
+         while(isCorrect){
+            try{
+                option = input.nextInt();
+                isCorrect = false;
+            }catch(InputMismatchException e){
+                input.nextLine();
+                System.out.print("invalid input, try again: ");
            }
+
+         }
         switch(option){
+            case 0 -> option = 0;
             case 1 -> {
                 if(operations.checkPower()== false){
                     operations.powerOn();
-                 }else {operations.powerOff();}
+                    System.out.println("Bike powered on");
+                 }else {
+                    operations.powerOff();
+                    System.out.println("Bike powered off");
+                          
+                    }
             }
-            case 2 -> { 
-                operations.accelerate();  
-            }
-            case 3 -> { 
-                operations.deccelerate();  
-            }     
-            case 4 ->{
-                System.out.print("Enter custom Acceleration: ");
-                try{
-                    accelerator = input.nextInt();}
-                catch(InputMismatchException e){
-                    System.out.print("invalid input, try again: ");
-                    input.nextLine();
-                    accelerator = input.nextInt();
-                   }
-                   operations.setAcceleration(accelerator);
-            }
+            case 2 ->  operations.accelerate();  
+            case 3 ->  operations.deccelerate();    
+            default -> System.out.println("Enter valid option");
    
         }
     }

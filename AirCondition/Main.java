@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 public class Main{
   
     public static void main(String...arg){
@@ -6,55 +7,51 @@ public class Main{
         ACService service =  new ACService();
         Scanner input = new Scanner(System.in);
 
-
-        int option = -1;
-
-        while(option != 0){
-            String menu = """  
+        String menu = """  
             ======AC System ========
             1. Power On/off
             2. Increase Temperature
             3. Decrease Temperature
-            4. Show Temperature
             0. Exit
             ========================
             Enter Option:     """;
+
+
+        int option = -1;
+
+        while(option != 0){
             System.out.print("\n" + menu+ " ");
-            option =  input.nextInt();
+
+            boolean isCorrect = true;
+            while(isCorrect){
+                try{
+                     option =  input.nextInt();  
+                     isCorrect = false;
+                }catch(InputMismatchException error){
+                     input.nextLine();
+                     System.out.print("invalid input, try again: ");
+                }
+            }
     
             switch(option){
+                case 0 -> option = 0;
                 case 1->{
                     if(service.airConditional.getPower() == false){
-                        service.powerOn();
-                    }else{service.powerOf();}
+                        service.setPower(true);
+                        System.out.println("AC powered on");
+                        System.out.print("Current");
+                        service.showAcTemperature();
+                    }
+                    else{
+                        service.setPower(false);
+                        System.out.println("AC powered off");                    
+                    }
                 }
-                case 2->{
-                  if(service.airConditional.getPower()  == true){
-                    System.out.print("Enter temperature to increase: ");
-                    double temperature =  input.nextInt();
-                    service.increaseTemperature(temperature);
-                    service.showAcTemperature();
-                  }
-                 else{
-                    System.out.println("Cannot perform action AC is off");
-                   }
-
-                }
-                case 3 ->{
-                    if(service.airConditional.getPower() == true){
-                    System.out.print("Enter temperature to decrease: ");
-                    double temperature =  input.nextInt();
-                    service.decreaseTemperature(temperature);
-                    service.showAcTemperature();
-                  }
-                 else{
-                    System.out.println("Cannot perform action AC is off");
-                  }
-                }
-                
-                case 4 ->{
-                            service.showAcTemperature();
-                }
+                case 2-> service.increaseTemperature();
+            
+                case 3 -> service.decreaseTemperature();
+                      
+              default -> System.out.println("Enter valid option");
               
             }
         }
